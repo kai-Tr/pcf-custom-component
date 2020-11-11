@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="Saigonthink" constructor="StringeeCall" version="1.0.0" display-name-key="StringeeCall" description-key="StringeeCall loader component" control-type="standard">
+    <property name="apiKeySid" display-name-key="apiKeySid_Display_Key" description-key="apiKeySid_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="apiKeySecret" display-name-key="apiKeySecret_Display_Key" description-key="apiKeySecret_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+    </resources>
+  </control>
+</manifest>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="Saigonthink" constructor="FontWrapper" version="1.0.0" display-name-key="FontWrapper" description-key="Goole Font loader component" control-type="standard">
+    <property name="fontName" display-name-key="fontName_Display_Key" description-key="fontName_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+    </resources>
+  </control>
+</manifest>
