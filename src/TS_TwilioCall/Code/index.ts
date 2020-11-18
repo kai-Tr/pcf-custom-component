@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import MyTwilio from "./twilio";
-import { postData } from "./apiCall";
+import * as Twilio from "./twilio";
 
 export class TwilioCall
   implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -34,8 +33,8 @@ export class TwilioCall
     this._context = context;
     this._notifyOutputChanged = notifyOutputChanged;
     container.innerHTML = `
+    <div id="twilioCallStatus" style="height: 30px;">Connecting to Twilio...</div>
     <input type="text" id="twilioNumberTo" placeholder="Make call to"/> <br />
-    <input type="button" id="twilioTokenBtn" value="Token" />
     <input type="button" id="twilioCallBtn" value="Call" />
     <input type="button" id="twilioEndCallBtn" value="Hangup" />
   `;
@@ -48,11 +47,13 @@ export class TwilioCall
       .querySelector("input#twilioEndCallBtn")!
       .addEventListener("click", this.onEndButtonClick.bind(this));
 
-    container
-      .querySelector("input#twilioTokenBtn")!
-      .addEventListener("click", this.onGetTokenButtonClick.bind(this));
 
-    this._twilio = MyTwilio();
+
+    let statusLabel: HTMLDivElement = this._container.querySelector(
+      "div#twilioCallStatus"
+    ) as HTMLDivElement;
+
+    Twilio.init("https://82307396657a.ngrok.io/api/token", statusLabel);
   }
 
   /**
@@ -76,22 +77,16 @@ export class TwilioCall
   }
 
   private onCallButtonClick(event: Event): void {
-    // let inputNumber: HTMLInputElement = this._container.querySelector(
-    //   "input#twilioNumber"
-    // ) as HTMLInputElement;
-    // if (!inputNumber.value) return;
-    // this._twilio.call("", inputNumber.value);
+    let inputNumber: HTMLInputElement = this._container.querySelector(
+      "input#twilioNumberTo"
+    ) as HTMLInputElement;
+    if (!inputNumber.value) return;
+
+    Twilio.makeCall(inputNumber.value);
   }
 
-  private onEndButtonClick(event: Event): void {}
-
-  private onGetTokenButtonClick(event: Event): void {
-    postData({
-      url: "https://localhost:44397/api/token/generate",
-      body: JSON.stringify("support_agent"),
-    }).then((res) => {
-      console.log(res);
-    });
+  private onEndButtonClick(event: Event): void {
+    Twilio.hangUp();
   }
 
   /**
