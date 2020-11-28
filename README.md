@@ -21,4 +21,4 @@ Follow the steps below to import and try the sample components in your model-dri
     ```
     msbuild /t:restore
     ```
-1. Again, run the command `msbuild`.
+1. Again, run the command `msbuild /p:Configuration=Release`.

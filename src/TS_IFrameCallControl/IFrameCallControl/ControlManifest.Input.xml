@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="Saigonthink" constructor="IFrameCallControl" version="1.0.0" display-name-key="IFrameCallControl_Display_Key" description-key="IFrameCallControl_Desc_Key" control-type="standard">
+    <property name="urlProperty" display-name-key="urlProperty_Display_Key" description-key="urlProperty_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/TS_IFrameControl.css" order="2" />
+      <resx path="strings/TS_IFrameControl.1033.resx" version="1.0.0"/>
+    </resources>
+  </control>
+</manifest>

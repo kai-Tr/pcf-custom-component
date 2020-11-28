@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="Saigonthink" constructor="TwilioCall" version="1.0.0" display-name-key="TwilioCall" description-key="TwilioCall loader component" control-type="standard">
-    <property name="TwilioAccountSid" display-name-key="TwilioAccountSid_Display_Key" description-key="TwilioAccountSid_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-    <property name="TwilioAuthToken" display-name-key="TwilioAuthToken_Display_Key" description-key="TwilioAuthToken_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-    <property name="TwiMLApplicationSid" display-name-key="TwiMLApplicationSid_Display_Key" description-key="TwiMLApplicationSid_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-    <property name="TwilioPhoneNumber" display-name-key="TwilioPhoneNumber_Display_Key" description-key="TwilioPhoneNumber_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+  <control namespace="Saigonthink" constructor="TwilioCall" version="1.0.6" display-name-key="TwilioCall" description-key="TwilioCall loader component" control-type="standard">
+    <property name="TwilioServerUrl" display-name-key="TwilioServerUrl_Display_Key" description-key="TwilioServerUrl_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />   
     <resources>
       <code path="index.ts" order="1"/>
     </resources>

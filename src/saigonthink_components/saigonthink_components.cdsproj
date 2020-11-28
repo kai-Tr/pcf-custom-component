@@ -41,6 +41,8 @@
   
   <ItemGroup>
     <ProjectReference Include="..\TS_FontWrapper\FontWrapper.pcfproj" />
+    <ProjectReference Include="..\TS_TwilioCall\TwilioCall.pcfproj" />
+    <ProjectReference Include="..\TS_IFrameCallControl\IFrameCallControl.pcfproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

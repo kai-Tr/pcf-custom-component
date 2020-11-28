@@ -1,5 +1,4 @@
 import * as Twilio from "twilio-client";
-import { postData } from "./apiCall";
 
 let device: Twilio.Device;
 let callStatus: HTMLDivElement;
@@ -16,12 +15,15 @@ export const init = (url, callStatusElement) => {
 };
 
 const genarateToken = (url) => {
-  postData({
-    url: url,
+  var requestOptions = {
+    method: "POST",
     body: "support_agent",
-  }).then((res) => {
-    device.setup(res.data);
-  });
+  };
+
+  fetch(url, requestOptions)
+    .then((response) => response.text())
+    .then((result) => device.setup(result))
+    .catch((error) => updateCallStatus(error));
 };
 
 const updateCallStatus = (status) => {
@@ -38,6 +40,17 @@ export const makeCall = (phoneNumber) => {
 
 export const hangUp = () => {
   device.disconnectAll();
+};
+
+export const isLegacyEdge = () => {
+  let navigatorObject =
+    navigator ||
+    (typeof window === "undefined" ? global["navigator"] : window.navigator);
+  return (
+    !!navigatorObject &&
+    typeof navigatorObject.userAgent === "string" &&
+    /edge\/\d+/i.test(navigatorObject.userAgent)
+  );
 };
 
 const deviceConnect = (connection) => {

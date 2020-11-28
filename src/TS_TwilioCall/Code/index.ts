@@ -5,11 +5,8 @@ import * as Twilio from "./twilio";
 export class TwilioCall
   implements ComponentFramework.StandardControl<IInputs, IOutputs> {
   private _container: HTMLDivElement;
-  private _twilioAccountSid: string;
-  private _twilioAuthToken: string;
-  private _twiMLApplicationSid: string;
-  private _twilioPhoneNumber: string;
-  private _twilio: any;
+  private _twilioServerUrl: string;
+  private _statusLabel: HTMLDivElement;
   /**
    * Empty constructor.
    */
@@ -33,10 +30,14 @@ export class TwilioCall
     this._context = context;
     this._notifyOutputChanged = notifyOutputChanged;
     container.innerHTML = `
-    <div id="twilioCallStatus" style="height: 30px;">Connecting to Twilio...</div>
+    
     <input type="text" id="twilioNumberTo" placeholder="Make call to"/> <br />
+    <input type="button" id="twilioTokenBtn" value="Token" />
     <input type="button" id="twilioCallBtn" value="Call" />
     <input type="button" id="twilioEndCallBtn" value="Hangup" />
+    <div id="twilioCallStatus"></div>    
+    <div>${window.location}</div>
+    <div id="twilioBroweragent">${navigator.userAgent}</div>
   `;
 
     container
@@ -47,13 +48,9 @@ export class TwilioCall
       .querySelector("input#twilioEndCallBtn")!
       .addEventListener("click", this.onEndButtonClick.bind(this));
 
-
-
-    let statusLabel: HTMLDivElement = this._container.querySelector(
-      "div#twilioCallStatus"
-    ) as HTMLDivElement;
-
-    Twilio.init("https://82307396657a.ngrok.io/api/token", statusLabel);
+    container
+      .querySelector("input#twilioTokenBtn")!
+      .addEventListener("click", this.onTokenButtonClick.bind(this));
   }
 
   /**
@@ -62,17 +59,8 @@ export class TwilioCall
    */
   public updateView(context: ComponentFramework.Context<IInputs>): void {
     // add code to update control view
-    this._twilioAccountSid = context.parameters.TwilioAccountSid.formatted
-      ? context.parameters.TwilioAccountSid.formatted
-      : "";
-    this._twilioAuthToken = context.parameters.TwilioAuthToken.formatted
-      ? context.parameters.TwilioAuthToken.formatted
-      : "";
-    this._twiMLApplicationSid = context.parameters.TwiMLApplicationSid.formatted
-      ? context.parameters.TwiMLApplicationSid.formatted
-      : "";
-    this._twilioPhoneNumber = context.parameters.TwilioPhoneNumber.formatted
-      ? context.parameters.TwilioPhoneNumber.formatted
+    this._twilioServerUrl = context.parameters.TwilioServerUrl.formatted
+      ? context.parameters.TwilioServerUrl.formatted
       : "";
   }
 
@@ -87,6 +75,16 @@ export class TwilioCall
 
   private onEndButtonClick(event: Event): void {
     Twilio.hangUp();
+  }
+
+  private onTokenButtonClick(event: Event): void {
+    if (this._twilioServerUrl) {
+      let statusLabel = this._container.querySelector(
+        "div#twilioCallStatus"
+      ) as HTMLDivElement;
+      statusLabel.innerHTML = "Connecting to Twilio...";
+      Twilio.init(this._twilioServerUrl, statusLabel);
+    }
   }
 
   /**
